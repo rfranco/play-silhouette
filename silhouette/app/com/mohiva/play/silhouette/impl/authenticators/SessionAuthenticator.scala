@@ -181,8 +181,8 @@ class SessionAuthenticatorService(
   def embed(session: Session, request: RequestHeader) = {
     val sessionCookie = Session.encodeAsCookie(session)
     val cookies = Cookies.merge(request.headers.get(HeaderNames.COOKIE).getOrElse(""), Seq(sessionCookie))
-    val additional = Seq(HeaderNames.COOKIE -> Seq(cookies))
-    request.copy(headers = AdditionalHeaders(request.headers, additional))
+    val additional = Seq(HeaderNames.COOKIE -> cookies)
+    request.copy(headers = request.headers.add(additional: _*))
   }
 
   /**

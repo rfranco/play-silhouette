@@ -49,7 +49,7 @@ class CookieSecretSpec extends PlaySpecification with Mockito with JsonMatchers 
       val dateTime = new DateTime(2014, 8, 8, 0, 0, 0)
       val decoded = Crypto.decryptAES(secret.copy(expirationDate = dateTime).serialize)
 
-      decoded must /("expirationDate" -> dateTime.getMillis)
+      decoded must /("expirationDate" -> dateTime.getMillis.toDouble)
       decoded must /("value" -> "value")
     }
   }

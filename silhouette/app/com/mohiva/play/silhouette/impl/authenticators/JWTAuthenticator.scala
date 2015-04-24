@@ -192,7 +192,8 @@ class JWTAuthenticatorService(
    * @return The manipulated request header.
    */
   def embed(token: String, request: RequestHeader) = {
-    request.copy(headers = AdditionalHeaders(request.headers, Seq(settings.headerName -> Seq(token))))
+    val additional = Seq(settings.headerName -> token)
+    request.copy(headers = request.headers.add(additional: _*))
   }
 
   /**

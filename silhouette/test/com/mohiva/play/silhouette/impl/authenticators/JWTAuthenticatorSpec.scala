@@ -63,7 +63,7 @@ class JWTAuthenticatorSpec extends PlaySpecification with Mockito with JsonMatch
       val jwt = service(None).serialize(authenticator)
       val json = Base64.decode(jwt.split('.').apply(1))
 
-      json must /("exp" -> authenticator.expirationDate.getMillis / 1000)
+      json must /("exp" -> (authenticator.expirationDate.getMillis / 1000).toInt)
     }
 
     "return a JWT with an encrypted subject" in new WithApplication with Context {
@@ -95,7 +95,7 @@ class JWTAuthenticatorSpec extends PlaySpecification with Mockito with JsonMatch
       val jwt = service(None).serialize(authenticator)
       val json = Base64.decode(jwt.split('.').apply(1))
 
-      json must /("iat" -> authenticator.lastUsedDate.getMillis / 1000)
+      json must /("iat" -> (authenticator.lastUsedDate.getMillis / 1000).toInt)
     }
 
     "throw an AuthenticatorException if a reserved claim will be overriden" in new WithApplication with Context {
